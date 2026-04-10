@@ -1,6 +1,7 @@
 package com.edutech.progressive.service.impl;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import com.edutech.progressive.entity.Doctor;
@@ -27,7 +28,8 @@ public class DoctorServiceImplArraylist implements DoctorService {
 
     @Override
     public List<Doctor> getDoctorSortedByExperience() {
-        return new ArrayList<>(); // need to be sorted
+        Collections.sort(doctorList);
+        return doctorList; // need to be sorted
     }
 
 }
