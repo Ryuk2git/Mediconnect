@@ -18,6 +18,7 @@ public class DoctorServiceImplArraylist implements DoctorService {
         return doctorList;
     }
 
+
     @Override
     public Integer addDoctor(Doctor doctor) {
         doctorList.add(doctor);
