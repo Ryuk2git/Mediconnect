@@ -11,23 +11,23 @@ import com.edutech.progressive.service.PatientService;
 
 @Service
 public class PatientServiceImplArraylist implements PatientService {
-     List<Patient> patientList = new ArrayList<>();
+    private static List<Patient> list = new ArrayList<Patient>();
 
     @Override
     public List<Patient> getAllPatients() {
-        return patientList;
+        return list;
     }
 
     @Override
     public Integer addPatient(Patient patient) {
-        patientList.add(patient);
+        list.add(patient);
         return 1;
     }
 
     @Override
     public List<Patient> getAllPatientSortedByName() {
-        Collections.sort(patientList);
-        return patientList;
+        Collections.sort(list);
+        return list;
     }
 
 }

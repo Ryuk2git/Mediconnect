@@ -1,54 +1,59 @@
 package com.edutech.progressive.service.impl;
 
+import java.sql.SQLClientInfoException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+
+import org.springframework.stereotype.Service;
 
 import com.edutech.progressive.dao.PatientDAO;
 import com.edutech.progressive.entity.Patient;
 import com.edutech.progressive.service.PatientService;
 
+@Service
 public class PatientServiceImplJdbc implements PatientService {
+    PatientDAO patientDAO;
 
-   private PatientDAO patientDao;
-
-    public PatientServiceImplJdbc(PatientDAO patientDao) {
-        this.patientDao = patientDao;
+    public PatientServiceImplJdbc(PatientDAO patientDAO) {
+        this.patientDAO = patientDAO;
     }
 
     @Override
-    public List<Patient> getAllPatients() {
-        try {
-            return patientDao.getAllPatients();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ArrayList<>();
-        }
+    public List<Patient> getAllPatients() throws SQLException {
+        return patientDAO.getAllPatients();
+
     }
 
     @Override
-    public Integer addPatient(Patient patient) {
-        try {
-            return patientDao.addPatient(patient);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return -1;
-        }
+    public Integer addPatient(Patient patient) throws SQLException {
+        return patientDAO.addPatient(patient);
+
     }
 
     @Override
-    public List<Patient> getAllPatientSortedByName() {
-        try {
-        List<Patient> patients = patientDao.getAllPatients();
-        if (patients != null && !patients.isEmpty()) {
-            Collections.sort(patients);
-            
-        }
+    public void updatePatient(Patient patient) throws SQLException {
+        patientDAO.updatePatient(patient);
+
+    }
+
+    @Override
+    public void deletePatient(int patientId) throws SQLException {
+        patientDAO.deletePatient(patientId);
+
+    }
+
+    @Override
+    public List<Patient> getAllPatientSortedByName() throws SQLException {
+        List<Patient> patients = new ArrayList<>(patientDAO.getAllPatients());
+        Collections.sort(patients);
         return patients;
-    } catch (Exception e) {
-        e.printStackTrace();
-        return new ArrayList<>();
-    }
     }
 
+    public Patient getPatientById(int patientId) throws SQLException {
+        return patientDAO.getPatientById(patientId);
+
+    }
 }

@@ -1,5 +1,6 @@
 package com.edutech.progressive.service.impl;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,58 +10,35 @@ import com.edutech.progressive.service.ClinicService;
 
 public class ClinicServiceImplJdbc implements ClinicService {
 
-   private ClinicDAO clinicDao;
+    ClinicDAO clinicDAO;
 
-    public ClinicServiceImplJdbc(ClinicDAO clinicDao) {
-        this.clinicDao = clinicDao;
+    public ClinicServiceImplJdbc(ClinicDAO clinicDAO) {
+        this.clinicDAO = clinicDAO;
     }
 
     @Override
-    public List<Clinic> getAllClinics() {
-        try {
-            return clinicDao.getAllClinics();
-        } catch (Exception e) {
-            System.err.println("Error while fetching all clinics: " + e.getMessage());
-            return new ArrayList<>();
-        }
+    public List<Clinic> getAllClinics() throws SQLException {
+        return clinicDAO.getAllClinics();
     }
 
     @Override
-    public Clinic getClinicById(int clinicId) {
-        try {
-            return clinicDao.getClinicById(clinicId);
-        } catch (Exception e) {
-            System.err.println("Error while fetching clinic with ID " + clinicId + ": " + e.getMessage());
-            return null;
-        }
+    public Clinic getClinicById(int clinicId) throws SQLException {
+        return clinicDAO.getClinicById(clinicId);
+
     }
 
     @Override
-    public Integer addClinic(Clinic clinic) {
-        try {
-            return clinicDao.addClinic(clinic);
-        } catch (Exception e) {
-            System.err.println("Error while adding clinic: " + e.getMessage());
-            return -1;
-        }
+    public Integer addClinic(Clinic clinic) throws SQLException {
+        return clinicDAO.addClinic(clinic);
     }
 
     @Override
-    public void updateClinic(Clinic clinic) {
-        try {
-            clinicDao.updateClinic(clinic);
-        } catch (Exception e) {
-            System.err.println("Error while updating clinic: " + e.getMessage());
-        }
+    public void updateClinic(Clinic clinic) throws SQLException {
+        clinicDAO.updateClinic(clinic);
     }
 
     @Override
-    public void deleteClinic(int clinicId) {
-        try {
-            clinicDao.deleteClinic(clinicId);
-        } catch (Exception e) {
-            System.err.println("Error while deleting clinic: " + e.getMessage());
-        }
+    public void deleteClinic(int clinicId) throws SQLException {
+        clinicDAO.deleteClinic(clinicId);
     }
-
 }
