@@ -11,7 +11,7 @@ import com.edutech.progressive.service.PatientService;
 
 @Service
 public class PatientServiceImplArraylist implements PatientService {
-    private static List<Patient> list = new ArrayList<Patient>();
+    List<Patient> list = new ArrayList<Patient>();
 
     @Override
     public List<Patient> getAllPatients() {

@@ -8,7 +8,7 @@ import com.edutech.progressive.entity.Doctor;
 import com.edutech.progressive.service.DoctorService;
 
 public class DoctorServiceImplArraylist implements DoctorService {
-    private static List<Doctor> doctorList = new ArrayList<Doctor>();
+    List<Doctor> doctorList = new ArrayList<Doctor>();
 
     public void emptyArrayList(){
         // does nothing
