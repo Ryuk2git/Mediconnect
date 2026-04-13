@@ -99,19 +99,19 @@ public class PatientDAOImpl implements PatientDAO{
 
     @Override
     public List<Patient> getAllPatients()throws SQLException{
-        List<Patient> list = null;
+        List<Patient> list = new ArrayList<>();
         String query = "select * from patient";
         Connection connection = DatabaseConnectionManager.getConnection();
             PreparedStatement ps = connection.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 list.add(new Patient(
-                    rs.getInt(1),
-                    rs.getString(2),
-                    rs.getDate(3),
-                    rs.getString(4),
-                    rs.getString(5),
-                    rs.getString(6)
+                    rs.getInt("patient_id"),
+                    rs.getString("full_name"),
+                    rs.getDate("date_of_birth"),
+                    rs.getString("contact_number"),
+                    rs.getString("email"),
+                    rs.getString("address")
             ));
         }
         return list;

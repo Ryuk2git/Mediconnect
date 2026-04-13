@@ -18,6 +18,7 @@ public class PatientServiceImplJpa implements PatientService {
 
     private PatientRepository patientRepository;
 
+    @Autowired
     public PatientServiceImplJpa(PatientRepository patientRepository) {
         this.patientRepository = patientRepository;
     }
