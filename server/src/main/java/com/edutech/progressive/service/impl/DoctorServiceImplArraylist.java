@@ -22,6 +22,11 @@ public class DoctorServiceImplArraylist implements DoctorService {
 
     @Override
     public Integer addDoctor(Doctor doctor) {
+        for(Doctor d : doctorList){
+            if(d.getDoctorId() == doctor.getDoctorId()){
+                return 1;
+            }
+        }
         doctorList.add(doctor);
         return 1; // not sure what to return
     }
