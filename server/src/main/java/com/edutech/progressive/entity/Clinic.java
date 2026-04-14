@@ -1,19 +1,33 @@
 package com.edutech.progressive.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Clinic {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int clinicId;
+
     private String clinicName;
     private String location;
+
     private int doctorId; 
+
     private String contactNumber;
     private int establishedYear;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "doctorId", referencedColumnName = "doctorId", insertable = false, updatable = false)
+    @JsonIgnore 
+    private Doctor doctor;
+
 
     public Clinic(){}
 
