@@ -7,16 +7,25 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.stereotype.Repository;
+
 import java.util.Date;
 
 import com.edutech.progressive.config.DatabaseConnectionManager;
 import com.edutech.progressive.entity.Patient;
 
+
+@Repository
 public class PatientDAOImpl implements PatientDAO{
 
     // public Connection connection;
+    
+
     // public PatientDAOImpl() throws SQLException {
-    //        connection = DatabaseConnectionManager.getConnection();
+        
+    //         connection = DatabaseConnectionManager.getConnection();
+        
     // }
 
 
@@ -106,14 +115,17 @@ public class PatientDAOImpl implements PatientDAO{
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 list.add(new Patient(
-                    rs.getInt("patient_id"),
-                    rs.getString("full_name"),
-                    rs.getDate("date_of_birth"),
-                    rs.getString("contact_number"),
-                    rs.getString("email"),
-                    rs.getString("address")
+                    rs.getInt(1),
+                    rs.getString(2),
+                    rs.getDate(3),
+                    rs.getString(4),
+                    rs.getString(5),
+                    rs.getString(6)
             ));
         }
         return list;
     }
+
+
+    
 }

@@ -7,9 +7,13 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.edutech.progressive.config.DatabaseConnectionManager;
 import com.edutech.progressive.entity.Doctor;
 
+
+@Repository
 public class DoctorDAOImpl implements DoctorDAO{
 
     // public Connection connection;
@@ -119,4 +123,6 @@ public class DoctorDAOImpl implements DoctorDAO{
         }
         return list;
     }
+
+    
 }

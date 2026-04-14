@@ -1,37 +1,33 @@
 package com.edutech.progressive.service.impl;
 
-import java.util.Comparator;
+import java.sql.SQLException;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.edutech.progressive.entity.Doctor;
-import com.edutech.progressive.repository.DoctorRepository;
 import com.edutech.progressive.service.DoctorService;
 
-public class DoctorServiceImplJpa implements DoctorService {
-    
-    public DoctorServiceImplJpa() {
-    }
 
-    @Autowired
-    DoctorRepository doctorRepository;
+@Service
+public class DoctorServiceImplJpa  implements DoctorService{
 
     @Override
-    public List<Doctor> getAllDoctors() {
-        return doctorRepository.findAll();
+    public List<Doctor> getAllDoctors() throws SQLException {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getAllDoctors'");
     }
 
     @Override
-    public Integer addDoctor(Doctor doctor) {
-        return doctorRepository.save(doctor).getDoctorId();
+    public Integer addDoctor(Doctor doctor) throws SQLException {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'addDoctor'");
     }
 
     @Override
-    public List<Doctor> getDoctorSortedByExperience() {
-        List<Doctor> doctorList = doctorRepository.findAll();
-        doctorList.sort(Comparator.comparing(Doctor::getYearsOfExperience));
-        return doctorList;
+    public List<Doctor> getDoctorSortedByExperience() throws SQLException {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getDoctorSortedByExperience'");
     }
 
 }

@@ -8,15 +8,24 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.edutech.progressive.config.DatabaseConnectionManager;
 import com.edutech.progressive.entity.Clinic;
 
+
+@Repository
 public class ClinicDAOImpl implements ClinicDAO{
     // public Connection connection;
+
+    
+
     // public ClinicDAOImpl() throws SQLException {
     //         this.connection = DatabaseConnectionManager.getConnection();
 
     // }
+
+
 
      @Override
     public int addClinic(Clinic clinic)throws SQLException {
@@ -118,4 +127,7 @@ public Clinic getClinicById(int clinicId) throws SQLException {
         }
         return list;
     }
+
+   
+
 }
