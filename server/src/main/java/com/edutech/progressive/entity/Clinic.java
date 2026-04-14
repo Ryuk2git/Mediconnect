@@ -29,6 +29,16 @@ public class Clinic {
     private Doctor doctor;
 
 
+    public Clinic(int clinicId, String clinicName, String location, int doctorId, String contactNumber, int establishedYear, Doctor doctor) {
+        this.clinicId = clinicId;
+        this.clinicName = clinicName;
+        this.location = location;
+        this.doctorId = doctorId;
+        this.contactNumber = contactNumber;
+        this.establishedYear = establishedYear;
+        this.doctor = doctor;
+    }
+
     public Clinic(){}
 
     public Clinic(int clinicId, String clinicName, String location, int doctorId, String contactNumber, int establishedYear) {
@@ -86,6 +96,14 @@ public class Clinic {
 
     public void setEstablishedYear(int establishedYear) {
         this.establishedYear = establishedYear;
+    }
+
+    public Doctor getDoctor() {
+        return doctor;
+    }
+
+    public void setDoctor(Doctor doctor) {
+        this.doctor = doctor;
     }
 
     

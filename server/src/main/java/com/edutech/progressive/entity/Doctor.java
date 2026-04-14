@@ -27,6 +27,16 @@ public class Doctor implements Comparable<Doctor> {
     @JsonIgnore // avoid infinite recursion / large payloads in JSON
     private List<Clinic> clinics = new ArrayList<>();
 
+    public Doctor(int doctorId, String fullName, String specialty, String contactNumber, String email, int yearsOfExperience, List<Clinic> clinics) {
+        this.doctorId = doctorId;
+        this.fullName = fullName;
+        this.specialty = specialty;
+        this.contactNumber = contactNumber;
+        this.email = email;
+        this.yearsOfExperience = yearsOfExperience;
+        this.clinics = clinics;
+    }
+
     public Doctor() {
     }
 
@@ -92,6 +102,14 @@ public class Doctor implements Comparable<Doctor> {
     @Override
     public int compareTo(Doctor o) {
         return Integer.compare(this.getYearsOfExperience(), o.getYearsOfExperience());
+    }
+
+    public List<Clinic> getClinics() {
+        return clinics;
+    }
+
+    public void setClinics(List<Clinic> clinics) {
+        this.clinics = clinics;
     }
 
    
