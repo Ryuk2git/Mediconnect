@@ -15,6 +15,8 @@ import com.edutech.progressive.entity.Doctor;
 
 @Repository
 public class DoctorDAOImpl implements DoctorDAO{
+    public DoctorDAOImpl() {
+    }
 
     // public Connection connection;
 
@@ -26,6 +28,7 @@ public class DoctorDAOImpl implements DoctorDAO{
     //         e.printStackTrace();
     //     }
     // }
+    
 
     @Override
     public int addDoctor(Doctor doctor)throws SQLException {
@@ -55,8 +58,6 @@ public class DoctorDAOImpl implements DoctorDAO{
         }
         return result;
     }
-
-    
 
     @Override
     public Doctor getDoctorById(int doctorId) throws SQLException{

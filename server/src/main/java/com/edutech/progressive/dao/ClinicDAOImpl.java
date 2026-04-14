@@ -16,6 +16,7 @@ import com.edutech.progressive.entity.Clinic;
 
 @Repository
 public class ClinicDAOImpl implements ClinicDAO{
+    
     // public Connection connection;
 
     
@@ -26,6 +27,9 @@ public class ClinicDAOImpl implements ClinicDAO{
     // }
 
 
+
+     public ClinicDAOImpl() {
+    }
 
      @Override
     public int addClinic(Clinic clinic)throws SQLException {

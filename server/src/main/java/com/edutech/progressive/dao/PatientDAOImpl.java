@@ -10,7 +10,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import java.util.Date;
+// import java.util.Date;
 
 import com.edutech.progressive.config.DatabaseConnectionManager;
 import com.edutech.progressive.entity.Patient;
@@ -67,7 +67,14 @@ public class PatientDAOImpl implements PatientDAO{
             
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                patient = new Patient(rs.getInt(1),rs.getString(2),rs.getDate(3),rs.getString(4),rs.getString(5),rs.getString(6));
+                patient = new Patient(
+                    rs.getInt("patient_id"),
+                    rs.getString("full_name"),
+                    rs.getDate("date_of_birth"),
+                    rs.getString("contact_number"),
+                    rs.getString("email"),
+                    rs.getString("address")
+                );
                 return patient;
             }
         } catch (Exception e) {
@@ -115,12 +122,12 @@ public class PatientDAOImpl implements PatientDAO{
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 list.add(new Patient(
-                    rs.getInt(1),
-                    rs.getString(2),
-                    rs.getDate(3),
-                    rs.getString(4),
-                    rs.getString(5),
-                    rs.getString(6)
+                    rs.getInt("patient_id"),
+                    rs.getString("full_name"),
+                    rs.getDate("date_of_birth"),
+                    rs.getString("contact_number"),
+                    rs.getString("email"),
+                    rs.getString("address")
             ));
         }
         return list;
