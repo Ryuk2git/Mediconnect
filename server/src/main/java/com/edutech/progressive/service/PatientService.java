@@ -16,6 +16,8 @@ public interface PatientService {
 
     default void emptyArrayList() throws SQLException {
     }
+    
+    Patient getPatientByEmail(String email);
 
     //Do not implement these methods in PatientServiceImplArraylist.java class
     default void updatePatient(Patient patient) throws SQLException {}

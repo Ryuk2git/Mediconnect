@@ -63,4 +63,11 @@ public class PatientServiceImplJdbc implements PatientService {
             return patientDAO.getPatientById(patientId);
         
     }
+
+
+    @Override
+    public Patient getPatientByEmail(String email) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getPatientByEmail'");
+    }
 }

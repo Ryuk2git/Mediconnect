@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+// import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.ObjectInputFilter.Status;
@@ -45,7 +45,11 @@ public class PatientController {
     @GetMapping("/{patientID}")
     public ResponseEntity<Patient> getPatientById(@PathVariable int patientId) {
         try {
-            return new ResponseEntity<>(patientService.getPatientById(patientId), HttpStatus.OK);
+            Patient patient = patientService.getPatientById(patientId);
+            if(patient == null){
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            }
+            return new ResponseEntity<>(patient, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

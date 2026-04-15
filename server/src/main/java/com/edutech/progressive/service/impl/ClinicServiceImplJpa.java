@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.edutech.progressive.entity.Clinic;
+import com.edutech.progressive.exception.ClinicAlreadyExistsException;
 import com.edutech.progressive.repository.ClinicRepository;
 import com.edutech.progressive.service.ClinicService;
 
@@ -26,13 +27,15 @@ public class ClinicServiceImplJpa implements ClinicService {
 
     @Override
     public Clinic getClinicById(int clinicId) throws SQLException {
-        Clinic clinic = clinicRepository.findById(clinicId).orElse(null);
-        return clinic;
+        return clinicRepository.findByClinicId(clinicId)
+                .orElseThrow(() -> new RuntimeException("Clinic not found with id: " + clinicId));
     }
 
     @Override
     public Integer addClinic(Clinic clinic) throws SQLException {
-        clinicRepository.save(clinic);
+        if (clinicRepository.findByClinicName(clinic.getClinicName()).isPresent()) {
+            throw new ClinicAlreadyExistsException("Clinic already exists with name: " + clinic.getClinicName());
+        }
         return clinic.getClinicId();
     }
 

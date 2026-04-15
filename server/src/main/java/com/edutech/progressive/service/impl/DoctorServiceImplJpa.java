@@ -9,6 +9,7 @@ import org.springframework.data.domain.Sort;
 
 import com.edutech.progressive.dto.DoctorDTO;
 import com.edutech.progressive.entity.Doctor;
+import com.edutech.progressive.exception.DoctorAlreadyExistsException;
 import com.edutech.progressive.repository.DoctorRepository;
 import com.edutech.progressive.service.DoctorService;
 
@@ -29,8 +30,10 @@ public class DoctorServiceImplJpa implements DoctorService {
 
     @Override
     public Integer addDoctor(Doctor doctor) {
-        Doctor saved = doctorRepository.save(doctor);
-        return saved.getDoctorId();
+        if (doctorRepository.findByEmail(doctor.getEmail()).isPresent()) {
+            throw new DoctorAlreadyExistsException("Doctor already exists with email: " + doctor.getEmail());
+        }
+        return doctor.getDoctorId();
     }
 
     @Override
@@ -50,7 +53,7 @@ public class DoctorServiceImplJpa implements DoctorService {
 
     @Override
     public Doctor getDoctorById(int doctorId) {
-        return doctorRepository.findByDoctorId(doctorId);
+        return doctorRepository.findById(doctorId) .orElseThrow(() -> new RuntimeException("Doctor not found with id: " + doctorId));
     }
 
     public void updateDoctor(int doctorId, Doctor doctor) {
