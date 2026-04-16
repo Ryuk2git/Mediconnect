@@ -37,4 +37,16 @@ public class DoctorServiceImplArraylist implements DoctorService {
         return doctorList; // need to be sorted
     }
 
+    @Override
+    public void updateDoctor(Doctor doctor) throws Exception {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'updateDoctor'");
+    }
+
+    @Override
+    public void deleteDoctor(int doctorId) throws Exception {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'deleteDoctor'");
+    }
+
 }

@@ -9,6 +9,8 @@ import com.edutech.progressive.entity.Doctor;
 
 @Repository
 public interface DoctorRepository extends JpaRepository<Doctor, Integer>{
-    Optional<Doctor> findByEmail(String email);
+    // List<Doctor> findAllByOrderByExperienceDesc();
+
+     Doctor findByEmail(String email);
     Doctor findByDoctorId(int doctorId);
 }

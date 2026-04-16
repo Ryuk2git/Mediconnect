@@ -7,98 +7,52 @@ import com.edutech.progressive.service.impl.ClinicServiceImplJpa;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.sql.SQLException;
 import java.util.List;
-
 @RestController
 @RequestMapping("/clinic")
 public class ClinicController {
-
-    private final ClinicService clinicService;
-
     @Autowired
-    public ClinicController(ClinicServiceImplJpa clinicServiceImplJpa){
-        this.clinicService = clinicServiceImplJpa;
+    ClinicServiceImplJpa c;
+    
+    public ClinicController(ClinicServiceImplJpa c) {
+        this.c = c;
     }
-
     @GetMapping
-    public ResponseEntity<?> getAllClinics() {
-        try {
-            List<Clinic> clinics = clinicService.getAllClinics();
-            return ResponseEntity.ok(clinics);
-        } catch (SQLException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error fetching clinics");
-        }
+    public ResponseEntity<List<Clinic>> getAllClinics() throws Exception {
+        return new ResponseEntity<>(c.getAllClinics(),HttpStatus.OK);
     }
 
-    @GetMapping("/{clinicId}")
-    public ResponseEntity<?> getClinicById(@PathVariable int clinicId) {
-        try {
-            Clinic clinic = clinicService.getClinicById(clinicId);
-            return ResponseEntity.ok(clinic);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error fetching clinic");
-        }
+    public ResponseEntity<Clinic> getClinicById(int clinicId) throws Exception {
+        return new ResponseEntity<>(c.getClinicById(clinicId),HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<?> addClinic(@RequestBody Clinic clinic) {
-        try {
-            Integer id = clinicService.addClinic(clinic);
-            return ResponseEntity.status(HttpStatus.CREATED).body(id);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error adding clinic");
-        }
+    public ResponseEntity<Integer> addClinic(@RequestBody Clinic clinic) throws Exception {
+        return new ResponseEntity<>(c.addClinic(clinic),HttpStatus.CREATED);
     }
 
-    @PutMapping("/{clinicId}")
-    public ResponseEntity<?> updateClinic(@PathVariable int clinicId,
-            @RequestBody Clinic clinic) {
-        try {
-            clinic.setClinicId(clinicId); 
-            clinicService.updateClinic(clinic);
-            return ResponseEntity.ok("Clinic updated");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating clinic");
-        }
+    public ResponseEntity<Void> updateClinic(int clinicId, Clinic clinic) throws Exception {
+        c.updateClinic(clinic);
+       return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @DeleteMapping("/{clinicId}")
-    public ResponseEntity<?> deleteClinic(@PathVariable int clinicId) {
-        try {
-            clinicService.deleteClinic(clinicId);
-            return ResponseEntity.ok("Clinic deleted");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error deleting clinic");
-        }
+    public ResponseEntity<Void> deleteClinic(int clinicId) throws Exception {
+        c.deleteClinic(clinicId);
+       return new ResponseEntity<>(HttpStatus.OK);
     }
-
     @GetMapping("/location/{location}")
-    public ResponseEntity<?> getAllClinicByLocation(@PathVariable String location) {
-        try {
-            List<Clinic> clinics = clinicService.getAllClinicByLocation(location);
-            return ResponseEntity.ok(clinics);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error fetching clinics by location");
-        }
+    public ResponseEntity<List<Clinic>> getAllClinicByLocation(@PathVariable String location) {
+        return new ResponseEntity<>(c.getAllClinicByLocation(location),HttpStatus.OK);
     }
 
-    @GetMapping("/doctor/{doctorId}")
-    public ResponseEntity<?> getAllClinicByDoctorId(@PathVariable int doctorId) {
-        try {
-            List<Clinic> clinics = clinicService.getAllClinicByDoctorId(doctorId);
-            return ResponseEntity.ok(clinics);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error fetching clinics by doctor");
-        }
+    public ResponseEntity<List<Clinic>> getAllClinicByDoctorId(@PathVariable int doctorId) {
+        return new ResponseEntity<>(c.getAllClinicByDoctorId(doctorId),HttpStatus.OK);
     }
 }

@@ -22,6 +22,7 @@ public interface ClinicRepository extends JpaRepository<Clinic, Integer> {
     List<Clinic> findAllByDoctorId(@Param("doctorId") int doctorId);
 
     Optional<Clinic> findByClinicName(String clinicName);
+     List<Clinic> findByLocation(String location);
 
     @Transactional
     @Modifying
