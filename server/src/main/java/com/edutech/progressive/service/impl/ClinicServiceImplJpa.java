@@ -27,8 +27,7 @@ public class ClinicServiceImplJpa implements ClinicService {
 
     @Override
     public Clinic getClinicById(int clinicId) throws SQLException {
-        return clinicRepository.findByClinicId(clinicId)
-                .orElseThrow(() -> new RuntimeException("Clinic not found with id: " + clinicId));
+        return clinicRepository.findByClinicId(clinicId).orElseThrow(() -> new RuntimeException("Clinic not found with id: " + clinicId));
     }
 
     @Override

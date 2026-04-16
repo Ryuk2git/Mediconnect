@@ -1,55 +1,66 @@
 package com.edutech.progressive.service.impl;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.edutech.progressive.dao.ClinicDAO;
+import com.edutech.progressive.dao.ClinicDAOImpl;
 import com.edutech.progressive.entity.Clinic;
 import com.edutech.progressive.service.ClinicService;
 
-@Service
 public class ClinicServiceImplJdbc implements ClinicService {
 
-    private final ClinicDAO clinicDAO;
+    private final ClinicDAOImpl impl;
 
-    // Constructor for dependency injection
-    @Autowired
-    public ClinicServiceImplJdbc(ClinicDAO clinicDAO) {
-        this.clinicDAO = clinicDAO;
+    public ClinicServiceImplJdbc(ClinicDAOImpl impl) {
+        this.impl = impl;
     }
 
     @Override
-    public List<Clinic> getAllClinics() throws SQLException {
-
-        return clinicDAO.getAllClinics();
+    public List<Clinic> getAllClinics() {
+        try {
+            return impl.getAllClinics();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null; 
     }
 
     @Override
-    public Clinic getClinicById(int clinicId) throws SQLException {
-        return clinicDAO.getClinicById(clinicId);
-
+    public Clinic getClinicById(int clinicId) {
+        try {
+            return impl.getClinicById(clinicId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @Override
-    public Integer addClinic(Clinic clinic) throws SQLException {
-        return clinicDAO.addClinic(clinic);
+    public Integer addClinic(Clinic clinic) {
+        try {
+            return impl.addClinic(clinic);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
     }
 
     @Override
-    public void updateClinic(Clinic clinic) throws SQLException {
-
-        clinicDAO.updateClinic(clinic);
-
+    public void updateClinic(Clinic clinic) {
+        try {
+            impl.updateClinic(clinic);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
-    public void deleteClinic(int clinicId) throws SQLException {
-        clinicDAO.deleteClinic(clinicId);
-
+    public void deleteClinic(int clinicId) {
+        try {
+            impl.deleteClinic(clinicId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-}
+} 

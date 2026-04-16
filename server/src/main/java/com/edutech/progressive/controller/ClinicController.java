@@ -1,6 +1,7 @@
 package com.edutech.progressive.controller;
 
 import com.edutech.progressive.entity.Clinic;
+import com.edutech.progressive.service.ClinicService;
 import com.edutech.progressive.service.impl.ClinicServiceImplJpa;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ import java.util.List;
 @RequestMapping("/clinic")
 public class ClinicController {
 
-    private final ClinicServiceImplJpa clinicService;
+    private final ClinicService clinicService;
 
     @Autowired
     public ClinicController(ClinicServiceImplJpa clinicServiceImplJpa){
