@@ -18,15 +18,9 @@ import com.edutech.progressive.entity.Clinic;
 public class ClinicDAOImpl implements ClinicDAO{
     
     // public Connection connection;
-
-    
-
     // public ClinicDAOImpl() throws SQLException {
     //         this.connection = DatabaseConnectionManager.getConnection();
-
     // }
-
-
 
      public ClinicDAOImpl() {
     }
