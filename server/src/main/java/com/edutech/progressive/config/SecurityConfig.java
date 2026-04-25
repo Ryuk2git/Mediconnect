@@ -23,10 +23,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final UserDetailsService userDetailsService;
     private final JwtRequestFilter jwtRequestFilter;
     private final PasswordEncoder passwordEncoder;
+
     @Autowired
     public SecurityConfig(UserDetailsService userDetailsService,
-                          JwtRequestFilter jwtRequestFilter,
-                          PasswordEncoder passwordEncoder) {
+            JwtRequestFilter jwtRequestFilter,
+            PasswordEncoder passwordEncoder) {
         this.userDetailsService = userDetailsService;
         this.jwtRequestFilter = jwtRequestFilter;
         this.passwordEncoder = passwordEncoder;
@@ -46,7 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/patient/**").hasAuthority("DOCTOR")
                 .antMatchers(HttpMethod.PUT, "/patient/**").hasAuthority("PATIENT")
                 .antMatchers(HttpMethod.DELETE, "/patient/**").hasAuthority("PATIENT")
-                  .antMatchers(HttpMethod.GET, "/appointment/**").hasAnyAuthority("PATIENT", "DOCTOR")
+                .antMatchers(HttpMethod.GET, "/appointment/**").hasAnyAuthority("PATIENT", "DOCTOR")
                 .antMatchers(HttpMethod.POST, "/appointment/**").hasAuthority("PATIENT")
                 .antMatchers(HttpMethod.DELETE, "/appointment/**").hasAuthority("DOCTOR")
                 .antMatchers(HttpMethod.DELETE, "/clinic/**").hasAuthority("DOCTOR")
