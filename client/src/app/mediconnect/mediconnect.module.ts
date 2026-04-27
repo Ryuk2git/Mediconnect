@@ -1,26 +1,60 @@
-import { NgModule } from "@angular/core";
-import { CommonModule } from "@angular/common";
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule, Routes } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
+import { Component } from '@angular/core';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { PatientCreateComponent } from './components/patientcreate/patientcreate.component';
+import { DoctorCreateComponent } from './components/doctorcreate/doctorcreate.component';
+import { ClinicCreateComponent } from './components/cliniccreate/cliniccreate.component';
+// import { ClinicCreateComponent } from './clinic/cliniccreate.component'; 
+@Component({
+  selector: 'mc-dashboard',
+  template: `<h3>MediConnect Dashboard</h3><p>Welcome to MediConnect</p>`
+})
 
-import { MediConnectRoutingModule } from "./mediconnect-routing.module";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { HttpClientModule } from "@angular/common/http";
-import { PatientCreateComponent } from "./components/patientcreate/patientcreate.component";
-// import { DoctorCreateComponent } from "./components/doctorcreate/doctorcreate.component";
-import { DoctorArrayComponent } from "./components/doctorarray/doctorarray.component";
+export class DashboardComponent { }
+@Component({
+  selector: 'mc-doctors',
+  template: `<h3>Doctors</h3>`
+})
+
+export class DoctorsComponent { }
+@Component({
+  selector: 'mc-clinics',
+  template: `<h3>Clinics</h3>`
+})
+
+export class ClinicsComponent { }
+
+@Component({
+  selector: 'mc-appointments',
+  template: `<h3>Appointments</h3>`
+})
+
+export class AppointmentsComponent { }
+
+const routes: Routes = [
+  { path: '', component: DashboardComponent },
+  { path: 'doctors', component: DoctorsComponent },
+  { path: 'clinics', component: ClinicsComponent },
+  // { path: 'patients', component: PatientsComponent },
+  // { path: 'appointments', component: AppointmentsComponent },
+];
 
 @NgModule({
   declarations: [
+    ClinicCreateComponent,
+    // DashboardComponent,
+    // DoctorsComponent,
+    // ClinicsComponent,
+    // AppointmentsComponent,
     PatientCreateComponent,
-    DoctorArrayComponent
+    DoctorCreateComponent
   ],
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-  ],
-  exports: [
-    
-  ]
+
+  imports: [CommonModule, HttpClientModule, ReactiveFormsModule, FormsModule],
+
 })
-export class MediconnectModule {}
+
+export class MediConnectModule { }
