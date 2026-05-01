@@ -1,0 +1,49 @@
+<div class="appointment-container">
+  <h2>Create Appointment</h2>
+
+  <form [formGroup]="appointmentForm" (ngSubmit)="onSubmit()">
+    
+    <div class="form-group">
+      <label>Appointment ID</label>
+      <input type="number" formControlName="appointmentId">
+    </div>
+
+    <div class="form-group">
+      <label>Patient ID</label>
+      <input type="number" formControlName="patientId">
+    </div>
+
+    <div class="form-group">
+      <label>Clinic ID</label>
+      <input type="number" formControlName="clinicId">
+    </div>
+
+    <div class="form-group">
+      <label>Appointment Date</label>
+      <input type="date" formControlName="appointmentDate">
+    </div>
+
+    <div class="form-group">
+      <label>Status</label>
+      <input type="text" formControlName="status">
+    </div>
+
+    <div class="form-group">
+      <label>Purpose</label>
+      <textarea formControlName="purpose"></textarea>
+    </div>
+
+    <div class="actions">
+      <button type="submit" [disabled]="appointmentForm.invalid">Submit</button>
+      <button type="button" (click)="resetForm()">Reset</button>
+    </div>
+  </form>
+
+  <div *ngIf="successMessage" class="feedback success">
+    {{ successMessage }}
+  </div>
+
+  <div *ngIf="errorMessage" class="feedback error">
+    {{ errorMessage }}
+  </div>
+</div>
