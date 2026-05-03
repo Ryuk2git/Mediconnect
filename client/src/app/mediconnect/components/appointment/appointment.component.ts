@@ -2,43 +2,53 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-appointment',
-  templateUrl: './appointment.component.html',
-  styleUrls: ['./appointment.component.scss']
+    selector: 'app-appointment-create',
+    templateUrl: './appointment.component.html',
+    styleUrls: ['./appointment.component.scss']
 })
 export class AppointmentCreateComponent implements OnInit {
-  appointmentForm!: FormGroup;
-  successMessage: string | null = null;
-  errorMessage: string | null = null;
 
-  constructor(private fb: FormBuilder) {}
+    appointmentForm!: FormGroup;
 
-  ngOnInit(): void {
-    this.appointmentForm = this.fb.group({
-      appointmentId: ['', [Validators.required, Validators.min(1)]],
-      patientId: ['', [Validators.required, Validators.min(1)]],
-      clinicId: ['', [Validators.required, Validators.min(1)]],
-      appointmentDate: ['', [Validators.required]],
-      status: ['', [Validators.required]],
-      purpose: ['', [Validators.required, Validators.minLength(5)]]
-    });
-  }
+    successMessage: string | null = null;
+    errorMessage: string | null = null;
 
-  onSubmit(): void {
-    this.successMessage = null;
-    this.errorMessage = null;
+    constructor(private fb: FormBuilder) { }
 
-    if (this.appointmentForm.valid) {
-      this.successMessage = 'Appointment created successfully!';
-      console.log('Form Data:', this.appointmentForm.value);
-    } else {
-      this.errorMessage = 'Please fill in all required fields correctly.';
-      this.appointmentForm.markAllAsTouched();
+    ngOnInit(): void {
+        this.appointmentForm = this.fb.group({
+            appointmentId: [null, [Validators.required, Validators.min(1)]],
+            patientId: [null, [Validators.required, Validators.min(1)]],
+            clinicId: [null, [Validators.required, Validators.min(1)]],
+            appointmentDate: ['', [Validators.required]],
+            status: ['', [Validators.required]],
+            purpose: ['', [Validators.required, Validators.minLength(5)]],
+        });
     }
-  }
 
-  resetForm(): void {
-    this.appointmentForm.reset({
+    // Convenience getter to use in template
+    get f() {
+        return this.appointmentForm.controls;
+    }
+
+    onSubmit(): void {
+        this.successMessage = null;
+        this.errorMessage = null;
+
+        if (this.appointmentForm.invalid) {
+            // Mark all controls touched to show validation messages
+            this.appointmentForm.markAllAsTouched();
+            this.errorMessage = 'Please correct the errors in the form before submitting.';
+            return;
+        }
+
+        // Simulate a successful save (no HttpClient/service here to keep unit tests simple)
+        this.successMessage = 'Appointment saved successfully!';
+    }
+
+
+    resetForm(): void {
+        this.appointmentForm.reset({
             appointmentId: null,
             patientId: null,
             clinicId: null,
@@ -46,7 +56,5 @@ export class AppointmentCreateComponent implements OnInit {
             status: '',
             purpose: ''
         });
-    this.successMessage = null;
-    this.errorMessage = null;
-  }
+    }
 }
