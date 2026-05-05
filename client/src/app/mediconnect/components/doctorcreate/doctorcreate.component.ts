@@ -15,7 +15,7 @@ export class DoctorCreateComponent implements OnInit {
 
     ngOnInit(): void {
         this.doctorForm = this.formBuilder.group({
-            doctorId: ['1', [Validators.required, Validators.min(1)]],
+            doctorId: ['', [Validators.required, Validators.min(1)]],
             fullName: ['', [Validators.required, Validators.minLength(2)]],
             specialty: ['', Validators.required],
             contactNumber: ['', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]],
