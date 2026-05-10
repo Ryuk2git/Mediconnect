@@ -1,25 +1,18 @@
-
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']
 })
-export class NavbarComponent implements OnInit {
-  role: string | null | undefined;
+export class NavBarComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor() { }
 
+  role!:string|null;
   ngOnInit(): void {
-      console.log(localStorage.getItem("role"));
-      this.role = localStorage.getItem("role");
-  }
-
-  logout(): void {
-      localStorage.removeItem('token')
-      this.router.navigate(["/auth"]);
+    console.log(localStorage.getItem("role"));
+    this.role=localStorage.getItem("role");
   }
 
 }

@@ -1,84 +1,182 @@
+/* Page Background Container */
+.page-background {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: calc(100vh - 61px);
+  background: #cdded8; 
+  padding: 40px 20px;
+  font-family: 'Inter', 'Roboto', sans-serif;
+}
+
+/* Main List Card */
+.list-container {
+  width: 100%;
+  max-width: 700px;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 40px 30px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+}
+
+/* Header Typography */
+.list-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.list-header h2 {
+  font-size: 26px;
+  color: #5E9896;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+  letter-spacing: 0.5px;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: #8c9e9c;
+  margin: 0 0 20px 0;
+}
+
+/* Toggle Button */
+.toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: #f0f7f7;
+  color: #5E9896;
+  border: 1px solid #d8e0df;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.toggle-btn:hover {
+  background: #5E9896;
+  color: #ffffff;
+  border-color: #5E9896;
+}
+
+/* Empty State */
+.empty-list {
+  text-align: center;
+  padding: 40px 0;
+  color: #8c9e9c;
+  font-style: italic;
+  background: #fdfdfd;
+  border: 1px dashed #d8e0df;
+  border-radius: 12px;
+}
+
+/* List & Cards */
 .doctor-list {
-    max-width: 720px;
-    margin: 20px auto;
-    padding: 0 8px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
 
-    .header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 12px;
+.doctor-card {
+  background: #ffffff;
+  border: 1px solid #d8e0df;
+  border-left: 4px solid #5E9896; /* Signature Teal Accent Edge */
+  border-radius: 8px;
+  padding: 20px;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
 
-        h2 {
-            margin: 0;
-            font-size: 20px;
-            font-weight: 600;
-            color: #0f172a;
-        }
+.doctor-card:hover {
+  box-shadow: 0 4px 15px rgba(94, 152, 150, 0.1);
+  transform: translateY(-2px);
+}
 
-        button {
-            padding: 8px 12px;
-            border: none;
-            border-radius: 8px;
-            background: #2563eb;
-            color: #fff;
-            font-weight: 600;
-            cursor: pointer;
+.doctor-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
 
-            &:hover {
-                background: #1e4fcc;
-            }
-        }
-    }
+.doctor-name {
+  margin: 0;
+  font-size: 18px;
+  color: #3b504e;
+  font-weight: 700;
+}
 
-    ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
+.doctor-specialty {
+  background: #f0f7f7;
+  color: #5E9896;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+}
 
-        .doctor-card {
-            border: 1px solid #e5e7eb;
-            border-radius: 12px;
-            padding: 12px 14px;
-            margin-bottom: 10px;
-            background: #ffffff;
-            box-shadow: 0 1px 6px rgba(16, 24, 40, 0.06);
+/* Expandable Details Area */
+.doctor-details {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #f0f7f7;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  animation: fadeInDown 0.3s ease-in-out;
+}
 
-            .summary {
-                display: flex;
-                align-items: baseline;
-                justify-content: space-between;
-                gap: 12px;
+.detail-row {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 14px;
+}
 
-                .name {
-                    font-weight: 600;
-                    color: #0f172a;
-                }
+.detail-label {
+  color: #8c9e9c;
+  font-weight: 500;
+  width: 140px; /* Aligns the data nicely */
+}
 
-                .specialty {
-                    color: #475569;
-                    font-size: 14px;
-                }
-            }
+.detail-value {
+  color: #3b504e;
+  font-weight: 600;
+}
 
-            .details {
-                margin-top: 10px;
-                padding-top: 10px;
-                border-top: 1px dashed #e2e8f0;
-                color: #0f172a;
+/* Simple transition animation */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
-                div {
-                    margin: 4px 0;
-                    font-size: 14px;
-                }
-            }
-        }
-    }
-
-    .empty {
-        text-align: center;
-        color: #64748b;
-        font-size: 14px;
-        padding: 16px 0;
-    }
+/* Responsive */
+@media (max-width: 600px) {
+  .doctor-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .detail-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+  }
+  
+  .detail-label {
+    width: auto;
+    font-size: 12px;
+  }
 }

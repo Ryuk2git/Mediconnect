@@ -1,16 +1,15 @@
 package com.edutech.progressive.service.impl;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.edutech.progressive.entity.Appointment;
 import com.edutech.progressive.repository.AppointmentRepository;
 import com.edutech.progressive.service.AppointmentService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
-public class AppointmentServiceImpl  implements AppointmentService{
+public class AppointmentServiceImpl  implements AppointmentService {
 
     @Autowired
     private AppointmentRepository appointmentRepository;
@@ -22,26 +21,18 @@ public class AppointmentServiceImpl  implements AppointmentService{
 
     @Override
     public int createAppointment(Appointment appointment) {
-        Appointment app = appointmentRepository.save(appointment);
-        return app.getAppointmentId();
+        return appointmentRepository.save(appointment).getAppointmentId();
     }
 
     @Override
     public void updateAppointment(Appointment appointment) {
-        Appointment existing = appointmentRepository.findById(appointment.getAppointmentId()).orElseThrow(() -> new RuntimeException("Appointment not found"));
-        
-        existing.setAppointmentDate(appointment.getAppointmentDate());
-        existing.setStatus(appointment.getStatus());
-        existing.setPurpose(appointment.getPurpose());
-        existing.setClinic(appointment.getClinic());
-        existing.setPatient(appointment.getPatient());
-
-        appointmentRepository.save(existing);
+        appointmentRepository.save(appointment);
     }
 
     @Override
     public Appointment getAppointmentById(int appointmentId) {
-        return appointmentRepository.findById(appointmentId).orElseThrow(() -> new RuntimeException("Appointment not found"));
+        return appointmentRepository.findById(appointmentId)
+                .orElseThrow(() -> new RuntimeException("Appointment not found with ID: " + appointmentId));
     }
 
     @Override
@@ -58,5 +49,4 @@ public class AppointmentServiceImpl  implements AppointmentService{
     public List<Appointment> getAppointmentByStatus(String status) {
         return appointmentRepository.findByStatus(status);
     }
-
 }

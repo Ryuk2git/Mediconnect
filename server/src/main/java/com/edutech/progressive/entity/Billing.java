@@ -1,27 +1,14 @@
 package com.edutech.progressive.entity;
 
-// import jakarta.persistence.*;
+import javax.persistence.*;
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
 @Entity
-@Table(name = "billing")
 public class Billing {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "billing_id")
-    private Integer billingId; 
+    private Integer billingId;
 
     @ManyToOne
     @JoinColumn(name = "patient_id", nullable = false)
@@ -30,18 +17,23 @@ public class Billing {
     @Column(nullable = false)
     private Double amount;
 
-    @Temporal(TemporalType.DATE) // Persist only the date part
-    @Column(name = "date_of_issue", nullable = false)
+    @Column(nullable = false)
+    @Temporal(TemporalType.DATE)
     private Date dateOfIssue;
 
     @Temporal(TemporalType.DATE)
-    @Column(name = "due_date")
-    private Date dueDate; 
+    private Date dueDate;
 
     @Column(nullable = false)
     private String status;
 
-    public Billing() {
+    // Getters and Setters
+    public Integer getBillingId() {
+        return billingId;
+    }
+
+    public void setBillingId(Integer billingId) {
+        this.billingId = billingId;
     }
 
     public Patient getPatient() {
@@ -82,13 +74,5 @@ public class Billing {
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    public Integer getBillingId() {
-        return billingId;
-    }
-
-    public void setBillingId(Integer billingId) {
-        this.billingId = billingId;
     }
 }

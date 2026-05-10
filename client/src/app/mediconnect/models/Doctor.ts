@@ -1,19 +1,29 @@
+import e from "cors";
+
 export class Doctor {
-    constructor(
-        public doctorId: number,
-        public fullName: string,
-        public contactNumber: string,
-        public email: string,
-        public specialty: string,
-        public yearsOfExperience: number
-    ) { }
+    doctorId:number;
+    fullName:string;
+    contactNumber:string;
+    email:string;
+    specialty:string;
+    yearsOfExperience:number;
+
+    constructor(doctorId:number,fullName:string,contactNumber:string,email:string,specialty:string,yearsOfExperience:number)
+    {
+        this.doctorId=doctorId;
+        this.fullName=fullName;
+        this.contactNumber=contactNumber;
+        this.email=email;
+        this.specialty=specialty;
+        this.yearsOfExperience=yearsOfExperience;
+    }
 
     logAttributes(): void {
-        console.log('doctorId:', this.doctorId);
-        console.log('fullName:', this.fullName);
-        console.log('contactNumber:', this.contactNumber);
-        console.log('email:', this.email);
-        console.log('specialty:', this.specialty);
-        console.log('yearsOfExperience:', this.yearsOfExperience);
-    }
+  console.log('doctorId:', this.doctorId);
+  console.log('fullName:', this.fullName);
+  console.log('contactNumber:', this.contactNumber);
+  console.log('email:', this.email);
+  console.log('specialty:', this.specialty);
+  console.log('yearsOfExperience:', this.yearsOfExperience);
+}
 }

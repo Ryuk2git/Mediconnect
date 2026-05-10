@@ -1,75 +1,62 @@
 package com.edutech.progressive.controller;
 
 import com.edutech.progressive.entity.Appointment;
+import org.springframework.http.ResponseEntity;
+
+import java.util.List;
+
 import com.edutech.progressive.service.AppointmentService;
-
-import org.springframework.http.ResponseEntity;
-
-import java.util.List;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/appointment")
 public class AppointmentController {
 
-    private final AppointmentService appointmentService;
+    @Autowired
+    private AppointmentService appointmentService;
 
-    public AppointmentController(AppointmentService appointmentService) {
-        this.appointmentService = appointmentService;
-    }
-
-    // Get All Appointments
-    // Return OK 200 and List<Appointment>
     @GetMapping
-    public ResponseEntity<List<Appointment>> getAllAppointment() {
-        return ResponseEntity.ok(appointmentService.getAllAppointments());
+    public ResponseEntity<List<Appointment>> getAllAppointments() {
+        List<Appointment> appointments = appointmentService.getAllAppointments();
+        return new ResponseEntity<>(appointments, HttpStatus.OK);
     }
 
-    // Create Appointment
-    // Return Created 201 and crated appointment
+    @GetMapping("/{appointmentId}")
+    public ResponseEntity<Appointment> getAppointmentById(@PathVariable Integer appointmentId) {
+        Appointment appointment = appointmentService.getAppointmentById(appointmentId);
+        return new ResponseEntity<>(appointment, HttpStatus.OK);
+    }
+
     @PostMapping
     public ResponseEntity<Integer> createAppointment(@RequestBody Appointment appointment) {
-        int newId = appointmentService.createAppointment(appointment);
-        return ResponseEntity.status(201).body(newId);
+        Integer appointmentId = appointmentService.createAppointment(appointment);
+        return new ResponseEntity<>(appointmentId, HttpStatus.CREATED);
     }
-    
-    // Update Appointment
-    // Return OK 200 and Void
-    @PutMapping("/{appointmentID}")
-    public ResponseEntity<Void> updateAppointment(@PathVariable int appointmentID, @RequestBody Appointment appointment) {
-        appointment.setAppointmentId(appointmentID);
+
+    @PutMapping("/{appointmentId}")
+    public ResponseEntity<Void> updateAppointment(@PathVariable Integer appointmentId, @RequestBody Appointment appointment) {
+        appointment.setAppointmentId(appointmentId);
         appointmentService.updateAppointment(appointment);
-        return ResponseEntity.ok().build();
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    // Get Appointment by id
-    // Return Ok 200 and Appointment
-    @GetMapping("/{appointmentID}")
-    public ResponseEntity<Appointment> getAppointmentById(@PathVariable int appointmentID) {
-        Appointment appointment = appointmentService.getAppointmentById(appointmentID);
-        return ResponseEntity.ok(appointment);
+    @GetMapping("/clinic/{clinicId}")
+    public ResponseEntity<List<Appointment>> getAppointmentsByClinic(@PathVariable Integer clinicId) {
+        List<Appointment> appointments = appointmentService.getAppointmentByClinic(clinicId);
+        return new ResponseEntity<>(appointments, HttpStatus.OK);
     }
 
-    // Get Appointment by Clinic
-    // Return OK 200 and List of Appointment
-    @GetMapping("/clinic/{clinicID}")
-    public ResponseEntity<List<Appointment>> getAppointmentByClinic(@PathVariable int clinicID) {
-        return ResponseEntity.ok(appointmentService.getAppointmentByClinic(clinicID));
+    @GetMapping("/patient/{patientId}")
+    public ResponseEntity<List<Appointment>> getAppointmentsByPatient(@PathVariable Integer patientId) {
+        List<Appointment> appointments = appointmentService.getAppointmentByPatient(patientId);
+        return new ResponseEntity<>(appointments, HttpStatus.OK);
     }
 
-    // Get Appointment by Patient
-    // Return Ok 200 and List of Appointment
-    @GetMapping("/patient/{patientID}")
-    public ResponseEntity<List<Appointment>> getAppointmentByPatient(@PathVariable int patientID) {
-        return ResponseEntity.ok(appointmentService.getAppointmentByPatient(patientID));
-    }
-
-    // Get Appointment by Status: 
     @GetMapping("/status/{status}")
-    public ResponseEntity<List<Appointment>> getAppointmentByStatus(@PathVariable String status) {
-        return ResponseEntity.ok(appointmentService.getAppointmentByStatus(status));
+    public ResponseEntity<List<Appointment>> getAppointmentsByStatus(@PathVariable String status) {
+        List<Appointment> appointments = appointmentService.getAppointmentByStatus(status);
+        return new ResponseEntity<>(appointments, HttpStatus.OK);
     }
 }

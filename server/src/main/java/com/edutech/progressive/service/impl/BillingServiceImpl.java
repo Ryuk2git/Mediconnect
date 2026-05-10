@@ -2,66 +2,45 @@ package com.edutech.progressive.service.impl;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
-
+import com.edutech.progressive.entity.Billing;
+import com.edutech.progressive.service.BillingService;
+import com.edutech.progressive.repository.BillingRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.edutech.progressive.entity.Billing;
-import com.edutech.progressive.entity.Patient;
-import com.edutech.progressive.repository.BillingRepository;
-import com.edutech.progressive.repository.PatientRepository;
-import com.edutech.progressive.service.BillingService;
 
 @Service
 public class BillingServiceImpl implements BillingService {
-    // @Autowired
+
+    @Autowired
     private BillingRepository billingRepository;
 
-    // @Autowired
-    private PatientRepository patientRepository;
-
-    public BillingServiceImpl(BillingRepository billingRepository, PatientRepository patientRepository) {
-        this.billingRepository = billingRepository;
-        this.patientRepository = patientRepository;
-    }
-
     @Override
-    public List<Billing> getAllBills() {
+    public List<Billing> getAllBills() throws Exception {
         return billingRepository.findAll();
     }
 
     @Override
-    public Billing getBillById(Integer billingId) {
-        return billingRepository.findById(billingId).orElse(null);
+    public Billing getBillById(int billingId) throws Exception {
+        return billingRepository.findById(billingId)
+                .orElseThrow(() -> new Exception("Billing record not found with ID: " + billingId));
     }
 
     @Override
-    @Transactional
-    public Integer createBill(Billing billing) {
-
-        if (billing == null) {
-            throw new IllegalArgumentException("Bill is required");
-        }
-
-        Patient incoming = billing.getPatient();
-        if (incoming == null) {
-            throw new IllegalArgumentException("Patient is required");
-        }
-
-        Patient managedPatient = patientRepository.getReferenceById(incoming.getPatientId());
-        billing.setPatient(managedPatient);
-        billingRepository.save(billing);
-        return billing.getBillingId();
+    public Integer createBill(Billing billing) throws Exception {
+        return billingRepository.save(billing).getBillingId();
     }
 
     @Override
-    public void deleteBill(Integer billingId) {
+    public void deleteBill(int billingId) throws Exception {
+        if (!billingRepository.existsById(billingId)) {
+            throw new Exception("Billing record not found with ID: " + billingId);
+        }
         billingRepository.deleteById(billingId);
     }
 
     @Override
-    public List<Billing> getBillsByPatientId(Integer patientId) {
-        return billingRepository.findByPatient_PatientId(patientId);
+    public List<Billing> getBillsByPatientId(int patientId) throws Exception {
+        return billingRepository.findAllByPatient_PatientId(patientId);
     }
-
 }

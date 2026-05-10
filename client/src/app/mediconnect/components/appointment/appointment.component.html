@@ -1,73 +1,81 @@
-<form class="appointment-form" [formGroup]="appointmentForm" (ngSubmit)="onSubmit()" novalidate>
-    <h2>Create Appointment</h2>
+<app-navbar></app-navbar>
 
-    <!-- Success / Error messages -->
-    <div *ngIf="successMessage" class="alert success">{{ successMessage }}</div>
-    <div *ngIf="errorMessage" class="alert error">{{ errorMessage }}</div>
+<div class="page-background">
+  <div class="form-container">
+    <div class="form-header">
+      <h2>Book Appointment</h2>
+      <p class="subtitle">Please provide the details for your visit</p>
+    </div>
 
-    <!-- Appointment ID -->
-    <div class="form-field">
-        <label for="appointmentId">Appointment ID</label>
-        <input id="appointmentId" type="number" formControlName="appointmentId" placeholder="Enter appointment ID" />
-        <div class="error-text" *ngIf="f.appointmentId.touched && f.appointmentId.errors">
-            <span *ngIf="f.appointmentId.errors['required']">Appointment ID is required.</span>
-            <span *ngIf="f.appointmentId.errors['min']">Appointment ID must be at least 1.</span>
+    <form [formGroup]="appointmentForm" (ngSubmit)="onSubmit()" class="appointment-form">
+
+      <div class="input-container">
+        <div class="input-group">
+          <div class="input-field-wrapper">
+            <label for="patientId">Patient ID</label>
+            <input type="number" id="patientId" formControlName="patientId" placeholder="Enter Patient ID" />
+          </div>
         </div>
-    </div>
+      </div>
 
-    <!-- Patient ID -->
-    <div class="form-field">
-        <label for="patientId">Patient ID</label>
-        <input id="patientId" type="number" formControlName="patientId" placeholder="Enter patient ID" />
-        <div class="error-text" *ngIf="f.patientId.touched && f.patientId.errors">
-            <span *ngIf="f.patientId.errors['required']">Patient ID is required.</span>
-            <span *ngIf="f.patientId.errors['min']">Patient ID must be at least 1.</span>
+      <div class="input-container">
+        <div class="input-group">
+          <div class="input-field-wrapper">
+            <label for="clinic">Select Clinic</label>
+            <select formControlName="clinic" id="clinic">
+              <option value="" disabled selected>Select a Clinic</option>
+              <option *ngFor="let clinic of clinics" [ngValue]="clinic">
+                {{ clinic.clinicName }}
+              </option>
+            </select>
+          </div>
         </div>
-    </div>
+      </div>
 
-    <!-- Clinic ID -->
-    <div class="form-field">
-        <label for="clinicId">Clinic ID</label>
-        <input id="clinicId" type="number" formControlName="clinicId" placeholder="Enter clinic ID" />
-        <div class="error-text" *ngIf="f.clinicId.touched && f.clinicId.errors">
-            <span *ngIf="f.clinicId.errors['required']">Clinic ID is required.</span>
-            <span *ngIf="f.clinicId.errors['min']">Clinic ID must be at least 1.</span>
+      <div class="input-container">
+        <div class="input-group" [class.has-error]="appointmentForm.controls['appointmentDate'].invalid && appointmentForm.controls['appointmentDate'].touched">
+          <div class="input-field-wrapper">
+            <label for="appointmentDate">Appointment Date</label>
+            <input type="date" id="appointmentDate" formControlName="appointmentDate" />
+          </div>
         </div>
-    </div>
-
-    <!-- Appointment Date -->
-    <div class="form-field">
-        <label for="appointmentDate">Appointment Date</label>
-        <input id="appointmentDate" type="date" formControlName="appointmentDate" />
-        <div class="error-text" *ngIf="f.appointmentDate.touched && f.appointmentDate.errors">
-            <span *ngIf="f.appointmentDate.errors['required']">Appointment date is required.</span>
+        <div class="error" *ngIf="appointmentForm.controls['appointmentDate'].invalid && appointmentForm.controls['appointmentDate'].touched">
+          <small>Appointment date is required.</small>
         </div>
-    </div>
+      </div>
 
-
-    <!-- Status -->
-    <div class="form-field">
-        <label for="status">Status</label>
-        <input id="status" type="text" formControlName="status"
-            placeholder="Enter status (e.g., SCHEDULED, COMPLETED, CANCELLED)" />
-        <div class="error-text" *ngIf="f.status.touched && f.status.errors">
-            <span *ngIf="f.status.errors['required']">Status is required.</span>
+      <div class="input-container">
+        <div class="input-group" [class.has-error]="appointmentForm.controls['status'].invalid && appointmentForm.controls['status'].touched">
+          <div class="input-field-wrapper">
+            <label for="status">Status</label>
+            <input type="text" id="status" formControlName="status" placeholder="E.g., Pending" />
+          </div>
         </div>
-    </div>
-
-    <!-- Purpose -->
-    <div class="form-field">
-        <label for="purpose">Purpose</label>
-        <textarea id="purpose" rows="3" formControlName="purpose"
-            placeholder="Enter purpose (min 5 characters)"></textarea>
-        <div class="error-text" *ngIf="f.purpose.touched && f.purpose.errors">
-            <span *ngIf="f.purpose.errors['required']">Purpose is required.</span>
-            <span *ngIf="f.purpose.errors['minlength']">Purpose must be at least 5 characters.</span>
+        <div class="error" *ngIf="appointmentForm.controls['status'].invalid && appointmentForm.controls['status'].touched">
+          <small>Status is required.</small>
         </div>
-    </div>
+      </div>
 
-    <div class="actions">
-        <button class="btn primary" type="submit">Save</button>
-        <button class="btn secondary" type="button" (click)="resetForm()">Reset</button>
-    </div>
-</form>
+      <div class="input-container">
+        <div class="input-group" [class.has-error]="appointmentForm.controls['purpose'].invalid && appointmentForm.controls['purpose'].touched">
+          <div class="input-field-wrapper">
+            <label for="purpose">Purpose of Visit</label>
+            <textarea id="purpose" formControlName="purpose" placeholder="Briefly describe the reason for your appointment"></textarea>
+          </div>
+        </div>
+        <div class="error" *ngIf="appointmentForm.controls['purpose'].invalid && appointmentForm.controls['purpose'].touched">
+          <small>Purpose must be at least 5 characters long.</small>
+        </div>
+      </div>
+
+      <button type="submit" class="form-btn" [disabled]="appointmentForm.invalid">Submit Request</button>
+
+      <div class="form-footer">
+        <a routerLink="/mediconnect" class="link">Return to Dashboard</a>
+      </div>
+    </form>
+
+    <div *ngIf="successMessage" class="success-message"><p>{{ successMessage }}</p></div>
+    <div *ngIf="errorMessage" class="error-message"><p>{{ errorMessage }}</p></div>
+  </div>
+</div>

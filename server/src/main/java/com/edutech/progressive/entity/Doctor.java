@@ -1,55 +1,52 @@
 package com.edutech.progressive.entity;
 
-import java.util.ArrayList;
-import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.persistence.Table;
 
 @Entity
-public class Doctor implements Comparable<Doctor> {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+@Table(name="doctor")
+public class Doctor implements Comparable<Doctor>{
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name="doctor_id")
     private int doctorId;
-    
+
+    @Column(name = "full_name",nullable = false)
     private String fullName;
+
+    @Column(name="specialty")
     private String specialty;
+
+    @Column(name="contact_number")
     private String contactNumber;
+
+    @Column(name = "email",nullable = false)
     private String email;
+
+    @Column(name="years_of_experience")
     private int yearsOfExperience;
 
-    @OneToMany(mappedBy = "doctor", fetch = FetchType.LAZY)
-    @JsonIgnore // avoid infinite recursion / large payloads in JSON
-    private List<Clinic> clinics = new ArrayList<>();
+    // @JsonIgnore
+    // @OneToMany(mappedBy = "doctor", orphanRemoval = true, cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    // private List<Clinic> clinics=new ArrayList<>();
 
-    public Doctor(int doctorId, String fullName, String specialty, String contactNumber, String email, int yearsOfExperience, List<Clinic> clinics) {
+
+    public Doctor() {
+    }
+    
+    public Doctor(int doctorId, String fullName, String specialty, String contactNumber, String email,int yearsOfExperience) {
         this.doctorId = doctorId;
         this.fullName = fullName;
         this.specialty = specialty;
         this.contactNumber = contactNumber;
         this.email = email;
         this.yearsOfExperience = yearsOfExperience;
-        this.clinics = clinics;
     }
-
-    public Doctor() {
-    }
-
-    public Doctor(int doctorId, String fullName, String speciality, String contactNumber, String email, int yearsOfExperience) {
-        this.doctorId = doctorId;
-        this.fullName = fullName;
-        this.specialty = speciality;
-        this.contactNumber = contactNumber;
-        this.email = email;
-        this.yearsOfExperience = yearsOfExperience;
-    }
-
-    
 
     public int getDoctorId() {
         return doctorId;
@@ -71,8 +68,8 @@ public class Doctor implements Comparable<Doctor> {
         return specialty;
     }
 
-    public void setSpecialty(String speciality) {
-        this.specialty = speciality;
+    public void setSpecialty(String specialty) {
+        this.specialty = specialty;
     }
 
     public String getContactNumber() {
@@ -83,14 +80,6 @@ public class Doctor implements Comparable<Doctor> {
         this.contactNumber = contactNumber;
     }
 
-    public int getYearsOfExperience() {
-        return yearsOfExperience;
-    }
-
-    public void setYearsOfExperience(int yearsOfExperience) {
-        this.yearsOfExperience = yearsOfExperience;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -99,19 +88,33 @@ public class Doctor implements Comparable<Doctor> {
         this.email = email;
     }
 
+    public int getYearsOfExperience() {
+        return yearsOfExperience;
+    }
+
+    public void setYearsOfExperience(int yearsOfExperience) {
+        this.yearsOfExperience = yearsOfExperience;
+    }
+
+
+
+    // public List<Clinic> getClinics() {
+    //     return clinics;
+    // }
+
+
+    // public void setClinics(List<Clinic> clinics) {
+    //     this.clinics = clinics;
+    // }
+
+    
     @Override
     public int compareTo(Doctor o) {
-        return Integer.compare(this.getYearsOfExperience(), o.getYearsOfExperience());
-    }
-
-    public List<Clinic> getClinics() {
-        return clinics;
-    }
-
-    public void setClinics(List<Clinic> clinics) {
-        this.clinics = clinics;
+        return Integer.compare(this.yearsOfExperience, o.yearsOfExperience);
     }
 
    
 
 }
+
+

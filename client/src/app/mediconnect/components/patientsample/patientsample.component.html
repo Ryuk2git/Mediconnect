@@ -1,11 +1,50 @@
-<div>
-    patientId: {{ patient.patientId }} <br />
-    fullName: {{ patient.fullName }} <br />
-    dateOfBirth: {{ patient.dateOfBirth }} <br />
-    contactNumber: {{ patient.contactNumber }} <br />
-    email: {{ patient.email }} <br />
-    address: {{ patient.address }} <br />
+<app-navbar></app-navbar>
+
+<div class="page-background">
+  <div class="details-container">
+    
+    <div class="card-header">
+      <h2>Patient Details</h2>
+      <p class="subtitle">Comprehensive profile information</p>
+    </div>
+
+    <div class="details-content">
+      <div class="detail-row">
+        <span class="detail-label">Patient ID</span>
+        <span class="detail-value">{{ patient.patientId }}</span>
+      </div>
+      
+      <div class="detail-row">
+        <span class="detail-label">Full Name</span>
+        <span class="detail-value">{{ patient.fullName }}</span>
+      </div>
+      
+      <div class="detail-row">
+        <span class="detail-label">Date of Birth</span>
+        <span class="detail-value">{{ patient.dateOfBirth | date:'yyyy-MM-dd' }}</span>
+      </div>
+      
+      <div class="detail-row">
+        <span class="detail-label">Contact Number</span>
+        <span class="detail-value">{{ patient.contactNumber }}</span>
+      </div>
+      
+      <div class="detail-row">
+        <span class="detail-label">Email</span>
+        <span class="detail-value">{{ patient.email }}</span>
+      </div>
+      
+      <div class="detail-row">
+        <span class="detail-label">Address</span>
+        <span class="detail-value">{{ patient.address }}</span>
+      </div>
+    </div>
+
+    <button class="action-btn" (click)="logPatientAttributes()">Log Patient Attributes</button>
+    
+    <div class="card-footer">
+      <a routerLink="/mediconnect" class="link">Return to Dashboard</a>
+    </div>
+
   </div>
-  
-  <button (click)="logPatientAttributes()">Log Patient Attributes</button>
-  
+</div>

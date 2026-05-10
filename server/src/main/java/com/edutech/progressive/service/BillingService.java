@@ -4,18 +4,15 @@ import com.edutech.progressive.entity.Billing;
 
 import java.util.List;
 
-import org.springframework.stereotype.Service;
-
-@Service
 public interface BillingService {
 
-    List<Billing> getAllBills();
+    List<Billing> getAllBills()throws Exception;
 
-    Billing getBillById(Integer billingId);
+    Billing getBillById(int billingId)throws Exception;
 
-    Integer createBill(Billing billing);
+    Integer createBill(Billing billing)throws Exception;
 
-    void deleteBill(Integer billingId);
+    void deleteBill(int billingId)throws Exception;
 
-    List<Billing> getBillsByPatientId(Integer patientId);
+    List<Billing> getBillsByPatientId(int patientId)throws Exception;
 }

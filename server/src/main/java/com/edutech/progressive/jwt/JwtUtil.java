@@ -1,12 +1,15 @@
 package com.edutech.progressive.jwt;
 
-import com.edutech.progressive.entity.User;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import com.edutech.progressive.repository.UserRepository;
+
 import io.jsonwebtoken.Claims;
+
+import com.edutech.progressive.entity.User;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;

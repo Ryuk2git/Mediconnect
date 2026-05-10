@@ -2,42 +2,43 @@ package com.edutech.progressive.service.impl;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.edutech.progressive.entity.Patient;
 import com.edutech.progressive.service.PatientService;
 
-@Service
-public class PatientServiceImplArraylist implements PatientService  {
+public class PatientServiceImplArraylist implements PatientService {
 
-    private static List<Patient> patientList = new ArrayList<>();
+    private static List<Patient>patientList=new ArrayList<>();
 
     @Override
     public List<Patient> getAllPatients() {
-        return patientList;
+        return new ArrayList<>(patientList);
     }
 
     @Override
     public Integer addPatient(Patient patient) {
         patientList.add(patient);
-        return 1;
+        return patientList.size();
     }
 
     @Override
     public List<Patient> getAllPatientSortedByName() {
-        Collections.sort(patientList);
-        return patientList;
-    }
-
-    public void emptyArrayList(){
-        patientList.clear();
+        List<Patient> sortedPatients = patientList;
+        sortedPatients.sort(Comparator.comparing(Patient::getFullName));
+        return sortedPatients;
     }
 
     @Override
-    public Patient getPatientByEmail(String email) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getPatientByEmail'");
+    public void emptyArrayList()
+    {
+        patientList=new ArrayList<>();
     }
+
+
+
 
 }

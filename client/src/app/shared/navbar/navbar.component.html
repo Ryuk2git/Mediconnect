@@ -1,14 +1,21 @@
-<nav>
-    <a routerLink="/dashboard">Dashboard</a>
-    <a routerLink="/clinic/create">Add Clinic</a>
-    <a routerLink="/patient/create">Add Patient</a>
-    <a routerLink="/doctor/create">Add Doctor</a>
-    <div class="nav-right">
-      <!-- Show Book Appointment only for patients -->
-      <button *ngIf="role === 'PATIENT'" (click)="bookAppointment()">
-        Book Appointment
-      </button>
-  
-      <button (click)="logout()">Logout</button>
+<nav class="mc-navbar" role="navigation" aria-label="Primary">
+  <div class="nav-left">
+    <div class="mc-navbar__brand" routerLink="/mediconnect" aria-label="MediConnect Home">
+      <span class="mc-logo">MC</span>
+      <span class="mc-title">MediConnect</span>
     </div>
-  </nav>
+
+    <ul class="navbar-list">
+      <li *ngIf="role === 'DOCTOR'">
+        <a routerLink="/mediconnect/clinic" class="mc-link" routerLinkActive="active">Add Clinic</a>
+      </li>
+      <li *ngIf="role !== 'DOCTOR'">
+        <a routerLink="/mediconnect/appointment" class="mc-link" routerLinkActive="active">Book Appointment</a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="nav-right">
+    <app-logout></app-logout>
+  </div>
+</nav>

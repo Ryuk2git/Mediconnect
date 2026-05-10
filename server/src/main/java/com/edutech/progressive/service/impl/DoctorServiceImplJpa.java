@@ -1,23 +1,26 @@
-
-
-
 package com.edutech.progressive.service.impl;
 
-import com.edutech.progressive.dto.DoctorDTO;
-import com.edutech.progressive.entity.Doctor;
-import com.edutech.progressive.entity.User;
-import com.edutech.progressive.exception.DoctorAlreadyExistsException;
-import com.edutech.progressive.repository.AppointmentRepository;
-import com.edutech.progressive.repository.ClinicRepository;
-import com.edutech.progressive.repository.DoctorRepository;
-import com.edutech.progressive.repository.UserRepository;
-import com.edutech.progressive.service.DoctorService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.List;
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.edutech.progressive.entity.Doctor;
+import com.edutech.progressive.exception.DoctorAlreadyExistsException;
+import com.edutech.progressive.repository.ClinicRepository;
+import com.edutech.progressive.repository.DoctorRepository;
+import com.edutech.progressive.service.DoctorService;
+import com.edutech.progressive.dto.DoctorDTO;
+import com.edutech.progressive.entity.User;
+import com.edutech.progressive.repository.AppointmentRepository;
+
+import com.edutech.progressive.repository.UserRepository;
+
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 
 @Service
 public class DoctorServiceImplJpa implements DoctorService {
@@ -68,7 +71,6 @@ public class DoctorServiceImplJpa implements DoctorService {
         User doctorUser = userRepository.findByDoctorId(doctorDTO.getDoctorId());
         if (existingDoctor != null && existingDoctor.getDoctorId() != doctorDTO.getDoctorId()) {
             throw new DoctorAlreadyExistsException("Doctor with email " + doctorDTO.getEmail() + " already exists");
-            // throw new DoctorAlreadyExistsException
         }
         User user = userRepository.findByUsername(doctorDTO.getUsername());
         if (user != null && user.getDoctor().getDoctorId() != doctorDTO.getDoctorId()) {
@@ -91,27 +93,28 @@ public class DoctorServiceImplJpa implements DoctorService {
         doctorRepository.save(doctorEntity);
     }
 
+    // @Override
+    // public void deleteDoctor(int doctorId) throws Exception {
+    //     appointmentRepository.deleteByDoctorId(doctorId);
+    //     clinicRepository.deleteByDoctorId(doctorId);
+    //     userRepository.deleteByDoctorId(doctorId);
+    //     doctorRepository.deleteById(doctorId);
+    // }
+
+
     @Override
     public void deleteDoctor(int doctorId) throws Exception {
-        // appointmentRepository.deleteByDoctorId(doctorId);
+        appointmentRepository.deleteByDoctorId(doctorId);
         clinicRepository.deleteByDoctorId(doctorId);
-        userRepository.deleteByDoctorId(doctorId);
+        User linkedUser = userRepository.findByDoctorId(doctorId);
+        if (linkedUser != null) {
+            userRepository.deleteById(linkedUser.getUserId());
+        }
         doctorRepository.deleteById(doctorId);
     }
 
     @Override
     public Doctor getDoctorById(int doctorId) throws Exception {
         return doctorRepository.findByDoctorId(doctorId);
-    }
-
-    @Override
-    public void updateDoctor(Doctor doctor) throws Exception {
-        Doctor oldDoctor = doctorRepository.findById(doctor.getDoctorId()).orElseThrow();
-        oldDoctor.setFullName(doctor.getFullName());
-        oldDoctor.setSpecialty(doctor.getSpecialty());
-        oldDoctor.setContactNumber(doctor.getContactNumber());
-        oldDoctor.setEmail(doctor.getEmail());
-        oldDoctor.setYearsOfExperience(doctor.getYearsOfExperience());
-        doctorRepository.save(oldDoctor);
     }
 }

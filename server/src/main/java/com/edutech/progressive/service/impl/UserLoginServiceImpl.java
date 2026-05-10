@@ -25,7 +25,10 @@ public class UserLoginServiceImpl implements UserDetailsService {
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserLoginServiceImpl(UserRepository userRepository, PatientRepository patientRepository, DoctorRepository doctorRepository, PasswordEncoder passwordEncoder) {
+    public UserLoginServiceImpl(UserRepository userRepository,
+                                PatientRepository patientRepository,
+                                DoctorRepository doctorRepository,
+                                PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.patientRepository = patientRepository;
         this.doctorRepository = doctorRepository;

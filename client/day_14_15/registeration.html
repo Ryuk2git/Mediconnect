@@ -11,53 +11,48 @@ registerUsername: it will not contain any special characters
 registerEmail: it will be a valid email
 registerPassword: it will be of atleast 8 characters 
 -->
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>User Registration</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Page</title>
 </head>
-
-<body class="bg-light">
-    <div class="container mt-5">
-        <div class="card mx-auto shadow-lg" style="max-width: 500px;">
-            <div class="card-body">
-                <h3 class="text-center mb-4 text-primary">User Registration</h3>
-
-                <form onsubmit="event.preventDefault(); register();">
-                    <div class="mb-3">
-                        <label for="registerName" class="form-label">Full Name</label>
-                        <input type="text" class="form-control" id="registerName" placeholder="Enter your full name" />
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="registerEmail" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="registerEmail" placeholder="Enter your email" />
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="registerUsername" class="form-label">Username</label>
-                        <input type="text" class="form-control" id="registerUsername" placeholder="Choose a username" />
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="registerPassword" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="registerPassword"
-                            placeholder="Create a password" />
-                    </div>
-
-                    <div class="d-grid">
-                        <button type="submit" class="btn btn-success">Register</button>
-                    </div>
-                </form>
+<body>
+    <div class="registration-form">
+        <h1>Registration Form</h1>
+        <form id="registration-form">
+            <div class="form-group">
+                <label for="name">Username</label>
+                <input type="text" id="name" name="name">
+                <div id="name-error" class="form-group error"></div>
             </div>
-        </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email">
+                <div id="email-error" class="form-group error"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="Username">Username</label>
+                <input type="text" id="Username" name="Username">
+                <div id="Username-error" class="form-group error"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="Password">Password</label>
+                <input type="password" id="password" name="password">
+                <div id="Password-error" class="form-group error"></div>
+            </div>
+
+            <button type="submit" class="submit-button">Submit</button>
+            <div id="success-message" class="success-message" style="display: none;"></div>
+        </form>
     </div>
-
-    <script src="/home/coder/app/client/day_14_15/js/validation.js"></script>
+    <script src="./js/validation.js">register()</script>
+        
+    
 </body>
-
 </html>

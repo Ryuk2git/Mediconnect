@@ -1,22 +1,25 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { Patient } from 'src/app/mediconnect/models/Patient';
 
 @Component({
-    selector: 'app-patient-sample',
+    selector: 'app-patientsample',
     standalone: true,
     templateUrl: './patientsample.component.html',
-    styleUrls: ['./patientsample.component.scss']
+    styleUrls: ['./patientsample.component.scss'],
+    imports: [CommonModule]
 })
 export class PatientSampleComponent {
-    patient = {
-        patientId: 1,
-        fullName: 'John Doe',
-        dateOfBirth: '1990-01-01',
-        contactNumber: '1234567890',
-        email: 'john@example.com',
-        address: '123 Main Street, Cityville'
-    };
+    patient: Patient = new Patient(
+        1,
+        'John Doe',
+        new Date('1990-01-01'),
+        '1234567890',
+        'john@example.com',
+        '123 Main Street, Cityville'
+    );
 
-    logPatientAttributes(): void {
-        console.log(this.patient);
+    logPatientAttributes() {
+        this.patient.logAttributes();
     }
 }

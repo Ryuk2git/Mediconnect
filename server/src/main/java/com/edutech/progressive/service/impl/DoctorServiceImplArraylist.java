@@ -1,52 +1,41 @@
 package com.edutech.progressive.service.impl;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+
+import org.springframework.stereotype.Service;
 
 import com.edutech.progressive.entity.Doctor;
 import com.edutech.progressive.service.DoctorService;
 
 public class DoctorServiceImplArraylist implements DoctorService {
-    List<Doctor> doctorList = new ArrayList<Doctor>();
 
-    public void emptyArrayList(){
-        // does nothing
-    }
+    private static List<Doctor>doctorList = new ArrayList<>();
 
     @Override
     public List<Doctor> getAllDoctors() {
         return doctorList;
     }
 
-
     @Override
     public Integer addDoctor(Doctor doctor) {
-        for(Doctor d : doctorList){
-            if(d.getDoctorId() == doctor.getDoctorId()){
-                return 1;
-            }
-        }
         doctorList.add(doctor);
-        return 1; // not sure what to return
+        return doctor.getDoctorId();
     }
 
     @Override
     public List<Doctor> getDoctorSortedByExperience() {
-        Collections.sort(doctorList);
-        return doctorList; // need to be sorted
+        List<Doctor> sortedDoctors = doctorList;
+        sortedDoctors.sort(Comparator.comparing(Doctor::getYearsOfExperience));
+        return sortedDoctors;
     }
-
     @Override
-    public void updateDoctor(Doctor doctor) throws Exception {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateDoctor'");
-    }
-
-    @Override
-    public void deleteDoctor(int doctorId) throws Exception {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteDoctor'");
+    public void emptyArrayList()
+    {
+        doctorList=new ArrayList<>();
     }
 
 }

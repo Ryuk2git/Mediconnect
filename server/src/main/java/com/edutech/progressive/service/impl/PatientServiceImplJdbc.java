@@ -1,73 +1,77 @@
 package com.edutech.progressive.service.impl;
 
-import java.sql.SQLClientInfoException;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collections;
+
 import java.util.Comparator;
 import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.edutech.progressive.dao.PatientDAO;
 import com.edutech.progressive.entity.Patient;
 import com.edutech.progressive.service.PatientService;
 
-@Service
 public class PatientServiceImplJdbc implements PatientService {
 
-        @Autowired
-    PatientDAO patientDAO;
+    private PatientDAO patientDAO;
 
     public PatientServiceImplJdbc(PatientDAO patientDAO) {
-    this.patientDAO = patientDAO;
+         this.patientDAO = patientDAO;
     }
-    
 
     @Override
-    public List<Patient> getAllPatients() throws SQLException{
+    public List<Patient> getAllPatients() throws Exception {
+        try {
             return patientDAO.getAllPatients();
-
-        
-    }
-
-
-  
-    @Override
-    public Integer addPatient(Patient patient) throws SQLException{
-            return patientDAO.addPatient(patient); 
-
+        } catch (SQLException e) {
+            throw new Exception("Error fetching all patients", e);
+        }
     }
 
     @Override
-    public void updatePatient(Patient patient)throws SQLException{
+    public Integer addPatient(Patient patient) throws Exception {
+        try {
+            return patientDAO.addPatient(patient);
+        } catch (SQLException e) {
+            throw new Exception("Error adding patient: " + patient.getFullName(), e);
+        }
+    }
+
+    @Override
+    public List<Patient> getAllPatientSortedByName() throws Exception {
+        try {
+            List<Patient> sortedPatients = patientDAO.getAllPatients();
+            if (!sortedPatients.isEmpty()) {
+                sortedPatients.sort(Comparator.comparing(Patient::getFullName));
+            }
+            return sortedPatients;
+        } catch (SQLException e) {
+            throw new Exception("Error fetching patients sorted by Name ", e);
+        }
+    }
+
+    @Override
+    public void updatePatient(Patient patient) throws Exception {
+        try {
             patientDAO.updatePatient(patient);
-
+        } catch (SQLException e) {
+            throw new Exception("Error updating patient with ID " + patient.getPatientId(), e);
+        }
     }
 
     @Override
-    public void deletePatient(int patientId)throws SQLException{
+    public void deletePatient(int patientId) throws Exception {
+        try {
             patientDAO.deletePatient(patientId);
-
+        } catch (SQLException e) {
+            throw new Exception("Error deleting patient with ID " + patientId, e);
+        }
     }
 
     @Override
-    public List<Patient> getAllPatientSortedByName() throws SQLException{
-        List<Patient> patients = new ArrayList<>(patientDAO.getAllPatients());
-            Collections.sort(patients, Comparator.comparing(Patient::getFullName));
-            return patients;
-    }
-
-    public Patient getPatientById(int patientId) throws SQLException{
-            return patientDAO.getPatientById(patientId);
-        
-    }
-
-
-    @Override
-    public Patient getPatientByEmail(String email) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getPatientByEmail'");
+    public Patient getPatientById(int patientId) throws Exception {
+        try {
+            Patient patient = patientDAO.getPatientById(patientId);
+            return patient;
+        } catch (Exception e) {
+            throw new Exception("Error fetching patient with ID " + patientId, e);
+        }
     }
 }

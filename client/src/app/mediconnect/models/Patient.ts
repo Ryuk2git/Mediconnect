@@ -1,15 +1,26 @@
 export class Patient {
-    constructor(
-        public patientId: number,
-        public fullName: string,
-        public dateOfBirth: Date,
-        public contactNumber: string,
-        public email: string,
-        public address: string,
+    patientId: number;
+    fullName: string;
+    dateOfBirth: Date;
+    contactNumber: string;
+    email: string;
+    address: string;
 
-        public username?: string,
-        public password?: string,
-    ) { }
+    constructor(
+        patientId: number,
+        fullName: string,
+        dateOfBirth: Date,
+        contactNumber: string,
+        email: string,
+        address: string
+    ) {
+        this.patientId = patientId;
+        this.fullName = fullName;
+        this.dateOfBirth = dateOfBirth;
+        this.contactNumber = contactNumber;
+        this.email = email;
+        this.address = address;
+    }
 
     logAttributes(): void {
         console.log('patientId:', this.patientId);
@@ -18,7 +29,7 @@ export class Patient {
         console.log('contactNumber:', this.contactNumber);
         console.log('email:', this.email);
         console.log('address:', this.address);
-        console.log('username:', this.username);
-        console.log('password:', this.password);
     }
+
+
 }

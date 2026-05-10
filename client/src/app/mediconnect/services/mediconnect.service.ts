@@ -1,90 +1,134 @@
-
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { Injectable } from "@angular/core";
+import { environment } from "src/environments/environment";
+import { HttpClient } from "@angular/common/http";
+import { Observable } from "rxjs";
+import { Patient } from "../models/Patient";
+import { Doctor } from "../models/Doctor";
+import { Clinic } from "../models/Clinic";
+import { Appointment } from "../models/Appointment";
+import { User } from "../models/User";
+import { DoctorDTO } from "../models/DoctorDTO";
+import { PatientDTO } from "../models/PatientDTO";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class MediConnectService {
-  private apiUrl = environment.apiUrl;
+  private baseUrl = `${environment.apiUrl}`;
 
   constructor(private http: HttpClient) { }
 
-  // Patient & Doctor Creation//
-  savePatient(patient: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/patients`, patient);
+
+
+  addPatient(patient: Patient): Observable<any> {
+    return this.http.post<Patient>(`${this.baseUrl}/patient`, patient);
   }
 
-  saveDoctor(doctor: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/doctors`, doctor);
-  }
-
-  // ---------------- PATIENT ----------------
-  getPatientById(patientId: number): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/patients/${patientId}`);
-  }
-
-  updatePatient(patientId: number, data: any): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/patients/${patientId}`, data);
+  updatePatient(patient: PatientDTO): Observable<Patient> {
+    return this.http.put<Patient>(`${this.baseUrl}/patient/${patient.patientId}`, patient);
   }
 
   deletePatient(patientId: number): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}/patients/${patientId}`);
-  }
-  // ---------------- DOCTOR ----------------
-  getDoctorById(doctorId: number): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/doctors/${doctorId}`);
+    return this.http.delete<any>(`${this.baseUrl}/patient/${patientId}`);
   }
 
-  updateDoctor(doctorId: number, data: any): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/doctors/${doctorId}`, data);
+  getAllPatients(): Observable<Patient[]> {
+    return this.http.get<Patient[]>(`${this.baseUrl}/patient`);
+  }
+
+  getPatientById(patientId: number): Observable<Patient> {
+    return this.http.get<Patient>(`${this.baseUrl}/patient/${patientId}`);
+  }
+
+
+
+  addDoctor(doctor: Doctor): Observable<any> {
+    return this.http.post<Doctor>(`${this.baseUrl}/doctor`, doctor);
+  }
+
+  updateDoctor(doctor: DoctorDTO): Observable<any> {
+    return this.http.put<Doctor>(`${this.baseUrl}/doctor/${doctor.doctorId}`, doctor);
   }
 
   deleteDoctor(doctorId: number): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}/doctors/${doctorId}`);
+    return this.http.delete<any>(`${this.baseUrl}/doctor/${doctorId}`);
   }
 
-  getUserById(userId: number): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/users/${userId}`);
+  getAllDoctors(): Observable<Doctor[]> {
+    return this.http.get<Doctor[]>(`${this.baseUrl}/doctor`);
   }
 
-  // ---------------- CLINIC ----------------
-  getAllClinics(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/clinics`);
+  getDoctorById(doctorId: number): Observable<Doctor> {
+    return this.http.get<Doctor>(`${this.baseUrl}/doctor/${doctorId}`);
   }
 
-  addClinic(clinic: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/clinics`, clinic);
+
+
+  addClinic(clinic: Clinic): Observable<any> {
+    return this.http.post<Clinic>(`${this.baseUrl}/clinic`, clinic);
   }
 
-  updateClinic(clinicId: number, data: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/clinics/${clinicId}`, data);
+  updateClinic(clinic: Clinic): Observable<Clinic> {
+    return this.http.put<Clinic>(`${this.baseUrl}/clinic/${clinic.clinicId}`, clinic);
   }
 
   deleteClinic(clinicId: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/clinics/${clinicId}`);
+    return this.http.delete<any>(`${this.baseUrl}/clinic/${clinicId}`);
   }
 
-  getClinicsByDoctorId(doctorId: number): Observable<any> {
-    return this.http.get(`${this.apiUrl}/doctors/${doctorId}/clinics`);
+  getAllClinics(): Observable<Clinic[]> {
+    return this.http.get<Clinic[]>(`${this.baseUrl}/clinic`);
   }
 
-  // ---------------- APPOINTMENT ----------------
-  getAppointmentsByPatient(patientId: number): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/appointments/patient/${patientId}`);
+  getClinicById(clinicId: number): Observable<Clinic> {
+    return this.http.get<Clinic>(`${this.baseUrl}/clinic/${clinicId}`);
   }
 
-  getAppointmentsByClinic(clinicId: number): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/clinics/${clinicId}/appointments`);
+  getClinicsByLocation(location: string): Observable<Clinic[]> {
+    return this.http.get<Clinic[]>(`${this.baseUrl}/clinic/location/${location}`);
   }
 
-  createAppointment(data: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/appointments`, data);
+  getClinicsByDoctorId(doctorId: number): Observable<Clinic[]> {
+    return this.http.get<Clinic[]>(`${this.baseUrl}/clinic/doctor/${doctorId}`);
   }
 
-  updateAppointment(data: any): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/appointments/${data.appointmentId}`, data);
+
+
+  createAppointment(appointment: Appointment): Observable<any> {
+    return this.http.post<Appointment>(`${this.baseUrl}/appointment`, appointment);
+  }
+
+  updateAppointment(appointment: Appointment): Observable<any> {
+    return this.http.put<Appointment>(`${this.baseUrl}/appointment/${appointment.appointmentId}`, appointment);
+  }
+
+  deleteAppointment(appointmentId: number): Observable<any> {
+    return this.http.delete<any>(`${this.baseUrl}/appointment/${appointmentId}`);
+  }
+
+  getAllAppointments(): Observable<Appointment[]> {
+    return this.http.get<Appointment[]>(`${this.baseUrl}/appointment`);
+  }
+
+  getAppointmentById(appointmentId: number): Observable<Appointment> {
+    return this.http.get<Appointment>(`${this.baseUrl}/appointment/${appointmentId}`);
+  }
+
+  getAppointmentsByClinic(clinicId: number): Observable<Appointment[]> {
+    return this.http.get<Appointment[]>(`${this.baseUrl}/appointment/clinic/${clinicId}`);
+  }
+
+  getAppointmentsByPatient(patientId: number): Observable<Appointment[]> {
+    return this.http.get<Appointment[]>(`${this.baseUrl}/appointment/patient/${patientId}`);
+  }
+
+  getAppointmentsByStatus(status: string): Observable<Appointment[]> {
+    return this.http.get<Appointment[]>(`${this.baseUrl}/appointment/status/${status}`);
+  }
+
+  
+
+  getUserById(userId: number): Observable<any> {
+    return this.http.get<User>(`${this.baseUrl}/user/${userId}`);
   }
 }

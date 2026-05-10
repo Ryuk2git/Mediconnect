@@ -1,59 +1,83 @@
-
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Appointment } from '../../models/Appointment';
+import { Clinic } from '../../models/Clinic';
+import { Patient } from '../../models/Patient';
 import { MediConnectService } from '../../services/mediconnect.service';
 
 @Component({
-  selector: 'app-appointment-create',
-  templateUrl: './appointment.component.html',
-  styleUrls: ['./appointment.component.scss']
+    selector: 'app-appointment',
+    templateUrl: './appointment.component.html',
+    styleUrls: ['./appointment.component.scss']
 })
 export class AppointmentCreateComponent implements OnInit {
-  appointmentForm!: FormGroup;
-  patientId!: number;
-  selectedPatient: any;
-  clinics: any[] = [];
-  successMessage: string | null = null;
-  errorMessage: string | null = null;
+    appointmentForm!: FormGroup;
+    successMessage: string | null = null;
+    errorMessage: string | null = null;
 
-  constructor(private fb: FormBuilder, private mediConnectService: MediConnectService) {}
+    clinics!: Clinic[];
+    selectedPatient!: Patient;
+    patientId!: number;
 
-  ngOnInit(): void {
-    this.patientId = Number(localStorage.getItem('patient_id'));
+    constructor(private formBuilder: FormBuilder, private mediconnectService: MediConnectService) { }
 
-    this.appointmentForm = this.fb.group({
-      clinic: ['', Validators.required],
-      appointmentDate: ['', Validators.required],
-      status: ['', Validators.required],
-      purpose: ['', Validators.required]
-    });
-
-    this.mediConnectService.getPatientById(this.patientId).subscribe((patient) => {
-      this.selectedPatient = patient;
-    });
-
-    this.mediConnectService.getAllClinics().subscribe((clinics) => {
-      this.clinics = clinics;
-    });
-  }
-
-  onSubmit(): void {
-    if (this.appointmentForm.valid && this.selectedPatient) {
-      const payload = {
-        ...this.appointmentForm.value,
-        patient: this.selectedPatient
-      };
-
-      this.mediConnectService.createAppointment(payload).subscribe({
-        next: (res: any) => {
-          this.successMessage = res.message;
-          this.errorMessage = null;
-        },
-        error: () => {
-          this.successMessage = null;
-          this.errorMessage = 'Failed to create appointment';
-        }
-      });
+    ngOnInit(): void {
+        this.patientId = Number(localStorage.getItem("patient_id"));
+        this.mediconnectService.getPatientById(this.patientId).subscribe({
+            next: (response) => {
+                this.selectedPatient = response;
+            },
+            error: (error) => console.log('Error loading selectedPatient', error)
+        });
+        this.appointmentForm = this.formBuilder.group({
+            patientId: [{value: this.patientId , disabled: true}],
+            clinic: ["", [Validators.required]],
+            appointmentDate: ['', [Validators.required]],
+            status: ['', [Validators.required]],
+            purpose: ['', [Validators.required, Validators.minLength(5)]]
+        });
+        this.mediconnectService.getAllClinics().subscribe({
+            next: (response) => {
+                this.clinics = response;
+            },
+            error: (error) => console.log('Error loading clinics', error)
+        });
     }
-  }
+
+    onSubmit(): void {
+        if (this.appointmentForm.valid) {
+            const appointment: Appointment = {
+                ...this.appointmentForm.getRawValue(),
+                patient: this.selectedPatient,
+            };
+            this.mediconnectService.createAppointment(appointment).subscribe({
+                next: (response) => {
+                    this.errorMessage = null;
+                    console.log(response);
+                    this.appointmentForm.reset();
+                    this.successMessage = 'Appointment created successfully!';
+                },
+                error: (error) => {
+                    this.handleError(error);
+                }
+            });
+        } else {
+            this.errorMessage = 'Please fill out all required fields correctly.';
+            this.successMessage = null;
+        }
+    }
+
+    private handleError(error: HttpErrorResponse): void {
+        if (error.error instanceof ErrorEvent) {
+            this.errorMessage = `Client-side error: ${error.error.message}`;
+        } else {
+            this.errorMessage = `Server-side error: ${error.status} ${error.message}`;
+            if (error.status === 400) {
+                this.errorMessage = 'Bad request. Please check your input.';
+            }
+        }
+        this.successMessage = null;
+        console.error('An error occurred:', this.errorMessage);
+    }
 }

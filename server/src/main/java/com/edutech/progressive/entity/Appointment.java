@@ -1,23 +1,14 @@
 package com.edutech.progressive.entity;
 
+import javax.persistence.*;
 import java.util.Date;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-
 
 @Entity
 @Table(name = "appointment")
 public class Appointment {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "appointment_id")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer appointmentId;
 
     @ManyToOne
@@ -37,26 +28,6 @@ public class Appointment {
     @Column(name = "purpose")
     private String purpose;
 
-    public Appointment() {
-    }
-
-    public Appointment(Patient patient, Clinic clinic, Date appointmentDate, String status, String purpose) {
-        this.patient = patient;
-        this.clinic = clinic;
-        this.appointmentDate = appointmentDate;
-        this.status = status;
-        this.purpose = purpose;
-    }
-
-    public Appointment(Integer appointmentId, Patient patient, Clinic clinic, Date appointmentDate, String status,
-            String purpose) {
-        this.appointmentId = appointmentId;
-        this.patient = patient;
-        this.clinic = clinic;
-        this.appointmentDate = appointmentDate;
-        this.status = status;
-        this.purpose = purpose;
-    }
 
     public Integer getAppointmentId() {
         return appointmentId;
@@ -105,7 +76,4 @@ public class Appointment {
     public void setPurpose(String purpose) {
         this.purpose = purpose;
     }
-    
-    
-    
 }
